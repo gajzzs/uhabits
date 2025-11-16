@@ -18,3 +18,25 @@ node_modules
 *.sketch
 crowdin.yml
 kotlin-js-store
+
+# Keystore files
+*.keystore
+*.jks
+*.p12
+*.key
+
+# Build folders
+build/
+out/
+dist/
+target/
+
+# APK files
+*.apk
+*.aab
+
+# Hidden files and folders (except .github)
+.*
+!.github/
+!.gitignore
+!.gitattributes

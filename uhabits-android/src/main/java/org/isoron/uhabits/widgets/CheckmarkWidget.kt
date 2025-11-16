@@ -51,6 +51,7 @@ open class CheckmarkWidget(
         (widgetView as CheckmarkWidgetView).apply {
             val today = DateUtils.getTodayWithOffset()
             setBackgroundAlpha(preferedBackgroundAlpha)
+            setHabitColor(WidgetTheme().color(habit.color).toInt())
             activeColor = WidgetTheme().color(habit.color).toInt()
             name = habit.name
             entryValue = habit.computedEntries.get(today).value

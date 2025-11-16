@@ -28,6 +28,22 @@ class GraphWidgetView(context: Context?, val dataView: View) : HabitWidgetView(c
     private lateinit var title: TextView
     fun setTitle(text: String?) {
         title.text = text
+        updateTitleVisibility()
+    }
+    
+    private fun updateTitleVisibility() {
+        val sharedPrefs = context.getSharedPreferences("org.isoron.uhabits_preferences", 0)
+        val titleDisplay = sharedPrefs.getString("pref_widget_title_display", "adaptive")
+        
+        title.visibility = when (titleDisplay) {
+            "always_show" -> VISIBLE
+            "always_hide" -> GONE
+            "adaptive" -> {
+                val heightDp = height / resources.displayMetrics.density
+                if (heightDp > 120) VISIBLE else GONE
+            }
+            else -> VISIBLE
+        }
     }
 
     override val innerLayoutId: Int

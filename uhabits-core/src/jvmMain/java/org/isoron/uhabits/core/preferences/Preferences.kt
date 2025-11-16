@@ -211,6 +211,30 @@ open class Preferences(private val storage: Storage) {
             for (l in listeners) l.onQuestionMarksChanged()
         }
 
+    var widgetStyle: String
+        get() = storage.getString("pref_widget_style", "calendar")
+        set(value) {
+            storage.putString("pref_widget_style", value)
+        }
+
+    var showWidgetWeekdays: Boolean
+        get() = storage.getBoolean("pref_widget_show_weekdays", true)
+        set(value) {
+            storage.putBoolean("pref_widget_show_weekdays", value)
+        }
+
+    var showWidgetDates: Boolean
+        get() = storage.getBoolean("pref_widget_show_dates", true)
+        set(value) {
+            storage.putBoolean("pref_widget_show_dates", value)
+        }
+
+    var widgetTitleDisplay: String
+        get() = storage.getString("pref_widget_title_display", "adaptive")
+        set(value) {
+            storage.putString("pref_widget_title_display", value)
+        }
+
     /**
      * @return An integer representing the first day of the week. Sunday
      * corresponds to 1, Monday to 2, and so on, until Saturday, which is

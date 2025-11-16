@@ -84,6 +84,38 @@
                 app:iconSpaceReserved="false" />
 
         <ListPreference
+                android:defaultValue="calendar"
+                android:entries="@array/widget_style_entries"
+                android:entryValues="@array/widget_style_values"
+                android:key="pref_widget_style"
+                android:summary="@string/widget_style_description"
+                android:title="@string/widget_style_title"
+                app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:key="pref_widget_show_weekdays"
+                android:summary="@string/widget_show_weekdays_description"
+                android:title="@string/widget_show_weekdays_title"
+                app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:key="pref_widget_show_dates"
+                android:summary="@string/widget_show_dates_description"
+                android:title="@string/widget_show_dates_title"
+                app:iconSpaceReserved="false" />
+
+        <ListPreference
+                android:defaultValue="adaptive"
+                android:entries="@array/widget_title_entries"
+                android:entryValues="@array/widget_title_values"
+                android:key="pref_widget_title_display"
+                android:summary="@string/widget_title_display_description"
+                android:title="@string/widget_title_display_title"
+                app:iconSpaceReserved="false" />
+
+        <ListPreference
                 android:key="pref_first_weekday"
                 android:title="@string/first_day_of_the_week"
                 app:iconSpaceReserved="false" />

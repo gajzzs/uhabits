@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright (C) 2016-2025 Álinson Santos Xavier <git@axavier.org>
+  ~
+  ~ This file is part of Loop Habit Tracker.
+  -->
+
+<resources>
+    <style name="NumberText">
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:textSize">@dimen/regularTextSize</item>
+    </style>
+
+    <style name="NumberText.Large">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+
+    <style name="NumberText.Small">
+        <item name="android:textSize">@dimen/smallTextSize</item>
+    </style>
+
+    <style name="UIText">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">@dimen/regularTextSize</item>
+    </style>
+
+    <style name="UIText.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="UIText.Button">
+        <item name="android:fontWeight">500</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+</resources>

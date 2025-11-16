@@ -47,7 +47,11 @@ class HistoryChart(
     var theme: Theme,
     var today: LocalDate,
     var onDateClickedListener: OnDateClickedListener = object : OnDateClickedListener {},
-    var padding: Double = 0.0
+    var padding: Double = 0.0,
+    var widgetStyle: String = "calendar",
+    var showWeekdayLabels: Boolean = true,
+    var showDateHeaders: Boolean = true,
+    var fontFamily: String? = null
 ) : DataView {
 
     enum class Square {
@@ -58,7 +62,7 @@ class HistoryChart(
         HATCHED
     }
 
-    var squareSpacing = 1.0
+    var squareSpacing = 4.2
     override var dataOffset = 0
 
     private var squareSize = 0.0
@@ -70,7 +74,9 @@ class HistoryChart(
     private var lastPrintedMonth = ""
     private var lastPrintedYear = ""
     private var headerOverflow = 0.0
-
+    private var centerOffsetX = 0.0
+    private var centerOffsetY = 0.0
+    
     override val dataColumnWidth: Double
         get() = squareSpacing + squareSize
 
@@ -101,23 +107,35 @@ class HistoryChart(
         width = canvas.getWidth()
         height = canvas.getHeight()
 
-        canvas.setColor(theme.cardBackgroundColor)
-        canvas.fill()
+        if (theme.cardBackgroundColor != Color.TRANSPARENT) {
+            canvas.setColor(theme.cardBackgroundColor)
+            canvas.fill()
+        }
 
         squareSize = round((height - 2 * padding) / 8.0)
         canvas.setFontSize(min(14.0, height * 0.06))
-
-        val weekdayColumnWidth = DayOfWeek.values().map { weekday ->
-            canvas.measureText(dateFormatter.shortWeekdayName(weekday)) + squareSize * 0.15
-        }.maxOrNull() ?: 0.0
-
+        
+        val weekdayColumnWidth = if (showWeekdayLabels) {
+            DayOfWeek.values().map { weekday ->
+                canvas.measureText(dateFormatter.shortWeekdayName(weekday)) + squareSize * 0.15
+            }.maxOrNull() ?: 0.0
+        } else {
+            0.0
+        }
+        
         nColumns = floor((width - 2 * padding - weekdayColumnWidth) / squareSize).toInt()
+        
+        canvas.setFontSize(min(12.0, squareSize * 0.4))
+        
         val firstWeekdayOffset = (
             today.dayOfWeek.daysSinceSunday -
                 firstWeekday.daysSinceSunday + 7
             ) % 7
         topLeftOffset = (nColumns - 1 + dataOffset) * 7 + firstWeekdayOffset
         topLeftDate = today.minus(topLeftOffset)
+        
+        centerOffsetX = padding
+        centerOffsetY = padding
 
         lastPrintedYear = ""
         lastPrintedMonth = ""
@@ -131,15 +149,18 @@ class HistoryChart(
         }
 
         // Draw week day names
-        canvas.setColor(theme.mediumContrastTextColor)
-        repeat(7) { row ->
-            val date = topLeftDate.plus(row)
-            canvas.setTextAlign(TextAlign.LEFT)
-            canvas.drawText(
-                dateFormatter.shortWeekdayName(date),
-                padding + nColumns * squareSize + squareSize * 0.15,
-                padding + squareSize * (row + 1) + squareSize / 2
-            )
+        if (showWeekdayLabels) {
+            canvas.setColor(theme.mediumContrastTextColor)
+            repeat(7) { row ->
+                val date = topLeftDate.plus(row)
+                canvas.setTextAlign(TextAlign.LEFT)
+                val yOffset = if (showDateHeaders) (row + 1) else row
+                canvas.drawText(
+                    dateFormatter.shortWeekdayName(date),
+                    centerOffsetX + nColumns * squareSize + squareSize * 0.15,
+                    padding + squareSize * yOffset + squareSize / 2
+                )
+            }
         }
     }
 
@@ -149,15 +170,18 @@ class HistoryChart(
         topDate: LocalDate,
         topOffset: Int
     ) {
-        drawHeader(canvas, column, topDate)
+        if (showDateHeaders) {
+            drawHeader(canvas, column, topDate)
+        }
         repeat(7) { row ->
             val offset = topOffset - row
             val date = topDate.plus(row)
             if (offset < 0) return
+            val yOffset = if (showDateHeaders) (row + 1) else row
             drawSquare(
                 canvas,
-                padding + column * squareSize,
-                padding + (row + 1) * squareSize,
+                centerOffsetX + column * squareSize,
+                centerOffsetY + yOffset * squareSize,
                 squareSize - squareSpacing,
                 squareSize - squareSpacing,
                 date,
@@ -187,7 +211,7 @@ class HistoryChart(
         canvas.setTextAlign(TextAlign.LEFT)
         canvas.drawText(
             headerText,
-            headerOverflow + padding + column * squareSize,
+            headerOverflow + centerOffsetX + column * squareSize,
             padding + squareSize / 2
         )
 
@@ -213,19 +237,29 @@ class HistoryChart(
             Square.ON -> {
                 color
             }
-            Square.OFF -> {
-                theme.lowContrastTextColor
+            Square.OFF -> {color.withAlpha(0.08)
+                // if (theme is WidgetTheme) {
+                //     color.withAlpha(0.3)
+                // } else {
+                //     color.blendWith(Color.BLACK, 0.7)
+                // }
             }
             Square.GREY -> {
                 theme.mediumContrastTextColor
             }
-            Square.DIMMED, Square.HATCHED -> {
-                color.blendWith(theme.cardBackgroundColor, 0.5)
+            Square.DIMMED -> {
+               color.withAlpha(0.08)
+            }
+            Square.HATCHED -> {
+                color.withAlpha(0.08)
             }
         }
+        
+        canvas.setColor(theme.cardBackgroundColor.withAlpha(0.15))
+        canvas.fillRoundRect(x+1, y+1, width, height, width * 0.3)
 
         canvas.setColor(squareColor)
-        canvas.fillRoundRect(x, y, width, height, width * 0.15)
+        canvas.fillRoundRect(x, y, width, height,  width * 0.3)
 
         if (value == Square.HATCHED) {
             canvas.setStrokeWidth(0.75)
@@ -251,9 +285,14 @@ class HistoryChart(
             if (c1 > c2) theme.cardBackgroundColor else theme.mediumContrastTextColor
         }
 
-        canvas.setColor(textColor)
-        canvas.setTextAlign(TextAlign.CENTER)
-        canvas.drawText(date.day.toString(), x + width / 2, y + width / 2)
+        if (widgetStyle == "dots") {
+            // Compact dots style - no text, just colored squares
+        } else {
+            // Calendar style - show day numbers
+            canvas.setColor(textColor)
+            canvas.setTextAlign(TextAlign.CENTER)
+            canvas.drawText(date.day.toString(), x + width / 2, y + width / 2)
+        }
 
         if (hasNotes) {
             circleColor = when (value) {

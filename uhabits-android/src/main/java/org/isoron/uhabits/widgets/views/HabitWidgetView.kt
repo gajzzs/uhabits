@@ -28,6 +28,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.graphics.ColorUtils
 import org.isoron.uhabits.R
 import org.isoron.uhabits.utils.InterfaceUtils.dpToPixels
 import org.isoron.uhabits.utils.StyledResources
@@ -41,6 +42,7 @@ abstract class HabitWidgetView : FrameLayout {
     private var shadowAlpha = 0
     private var res: StyledResources? = null
     private var backgroundAlpha = 0
+    private var habitColor: Int? = null
 
     constructor(context: Context?) : super(context!!) {
         init()
@@ -60,6 +62,11 @@ abstract class HabitWidgetView : FrameLayout {
 
     fun setBackgroundAlpha(backgroundAlpha: Int) {
         this.backgroundAlpha = backgroundAlpha
+        rebuildBackground()
+    }
+
+    fun setHabitColor(color: Int) {
+        this.habitColor = color
         rebuildBackground()
     }
 
@@ -90,10 +97,21 @@ abstract class HabitWidgetView : FrameLayout {
             shadowOffset.toFloat(),
             shadowColor
         )
-        backgroundPaint?.color = res!!.getColor(R.attr.cardBgColor)
+        val baseColor = res!!.getColor(R.attr.cardBgColor)
+        val finalColor = habitColor?.let { blendWithHabitColor(baseColor, it) } ?: baseColor
+        backgroundPaint?.color = finalColor
         backgroundPaint?.alpha = backgroundAlpha
         frame = findViewById<View>(R.id.frame) as ViewGroup
         if (frame != null) frame!!.background = background
+    }
+
+    private fun blendWithHabitColor(baseColor: Int, habitColor: Int): Int {
+        val luminance = ColorUtils.calculateLuminance(habitColor)
+        return if (luminance > 0.3) {
+            ColorUtils.blendARGB(baseColor, habitColor, 0.15f)
+        } else {
+            baseColor
+        }
     }
 
     private fun init() {

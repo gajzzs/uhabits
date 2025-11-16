@@ -237,4 +237,39 @@
     <string name="pref_midnight_delay_description">Wait until 3:00 AM to show a new day. Useful if you typically go to sleep after midnight. Requires app restart.</string>
     <string name="pref_animations_title">Disable animations</string>
     <string name="pref_animations_description">Disable confetti animation after adding a checkmark.</string>
+    <string name="widget_style_title">Widget style</string>
+    <string name="widget_style_description">Choose between calendar tiles or compact dots.</string>
+    <string name="widget_style_calendar">Calendar tiles</string>
+    <string name="widget_style_dots">Compact dots</string>
+
+    <string-array name="widget_style_entries">
+        <item>@string/widget_style_calendar</item>
+        <item>@string/widget_style_dots</item>
+    </string-array>
+
+    <string-array name="widget_style_values">
+        <item>calendar</item>
+        <item>dots</item>
+    </string-array>
+    <string name="widget_show_weekdays_title">Show weekday labels</string>
+    <string name="widget_show_weekdays_description">Display day names (Mon, Tue, etc.) on widget</string>
+    <string name="widget_show_dates_title">Show date headers</string>
+    <string name="widget_show_dates_description">Display month/year headers on widget</string>
+    <string name="widget_title_display_title">Widget title display</string>
+    <string name="widget_title_display_description">Control when to show habit name on widgets</string>
+    <string name="widget_title_always_show">Always show</string>
+    <string name="widget_title_always_hide">Always hide</string>
+    <string name="widget_title_adaptive">Adaptive (show on larger widgets)</string>
+
+    <string-array name="widget_title_entries">
+        <item>@string/widget_title_always_show</item>
+        <item>@string/widget_title_always_hide</item>
+        <item>@string/widget_title_adaptive</item>
+    </string-array>
+
+    <string-array name="widget_title_values">
+        <item>always_show</item>
+        <item>always_hide</item>
+        <item>adaptive</item>
+    </string-array>
 </resources>

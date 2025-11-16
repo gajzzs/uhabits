@@ -18,16 +18,11 @@
   ~ with this program. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:minHeight="70dp"
-                    android:minWidth="100dp"
-                    android:minResizeWidth="100dp"
-                    android:minResizeHeight="70dp"
-                    android:initialLayout="@layout/widget_graph"
-                    android:previewImage="@drawable/widget_preview_history"
-                    android:resizeMode="vertical|horizontal"
-                    android:updatePeriodMillis="3600000"
-                    android:configure="org.isoron.uhabits.widgets.activities.HabitPickerDialog"
-                    android:widgetCategory="home_screen">
-
-</appwidget-provider>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/grey_50" />
+    <corners android:radius="12dp" />
+    <stroke
+        android:width="0.5dp"
+        android:color="@color/grey_200" />
+</shape>

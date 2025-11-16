@@ -19,6 +19,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppBaseTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="aboutScreenColor">@color/blue_800</item>
         <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="actionModeBackground">@color/grey_700</item>
@@ -28,7 +29,7 @@
         <item name="android:itemBackground">?attr/contrast0</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:textColor">@color/grey_800</item>
-        <item name="cardBackground">@drawable/card_light_background</item>
+        <item name="cardBackground">@drawable/card_modern_light</item>
         <item name="cardBgColor">@color/grey_50</item>
         <item name="colorAccent">?aboutScreenColor</item>
         <item name="colorPrimary">#363636</item>
@@ -68,13 +69,14 @@
     </style>
 
     <style name="AppBaseThemeDark" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="aboutScreenColor">@color/blue_300</item>
         <item name="actionModeBackground">@color/grey_800</item>
         <item name="android:alertDialogTheme">@style/Theme.AppCompat.Dialog</item>
         <item name="android:dialogTheme">@style/Theme.AppCompat.Dialog</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:textColor">@color/grey_100</item>
-        <item name="cardBackground">@drawable/card_dark_background</item>
+        <item name="cardBackground">@drawable/card_modern_dark</item>
         <item name="cardBgColor">@color/grey_850</item>
         <item name="colorAccent">?aboutScreenColor</item>
         <item name="colorPrimary">@color/grey_950</item>
@@ -118,7 +120,7 @@
     <style name="AppBaseThemeDark.PureBlack">
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:textColor">@color/grey_200</item>
-        <item name="cardBackground">@drawable/card_amoled_background</item>
+        <item name="cardBackground">@drawable/card_modern_amoled</item>
         <item name="cardBgColor">@color/black</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
@@ -196,20 +198,23 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:layout_marginBottom">3dp</item>
-        <item name="android:layout_marginLeft">3dp</item>
-        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
         <item name="android:background">?cardBackground</item>
     </style>
 
     <style name="Card" parent="CardCommon">
-        <item name="android:layout_marginBottom">1dp</item>
-        <item name="android:elevation">1dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:elevation">4dp</item>
         <item name="android:background">?attr/cardBgColor</item>
+        <item name="android:radius">12dp</item>
     </style>
 
     <style name="CardHeader">
@@ -270,18 +275,19 @@
 
     <style name="SelectHabitTypeButton">
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginRight">16dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:elevation">6dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/round_ripple</item>
         <item name="android:clickable">true</item>
         <item name="android:selectable">true</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="SelectHabitTypeButtonTitle">

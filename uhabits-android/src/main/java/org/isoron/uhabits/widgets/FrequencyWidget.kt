@@ -45,6 +45,7 @@ class FrequencyWidget(
         val widgetView = v as GraphWidgetView
         widgetView.setTitle(habit.name)
         widgetView.setBackgroundAlpha(preferedBackgroundAlpha)
+        widgetView.setHabitColor(WidgetTheme().color(habit.color).toInt())
         if (preferedBackgroundAlpha >= 255) widgetView.setShadowAlpha(0x4f)
         (widgetView.dataView as FrequencyChart).apply {
             setFirstWeekday(firstWeekday)

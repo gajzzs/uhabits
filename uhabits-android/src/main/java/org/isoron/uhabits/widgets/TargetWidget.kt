@@ -48,6 +48,7 @@ class TargetWidget(
     override fun refreshData(view: View) = runBlocking {
         val widgetView = view as GraphWidgetView
         widgetView.setBackgroundAlpha(preferedBackgroundAlpha)
+        widgetView.setHabitColor(WidgetTheme().color(habit.color).toInt())
         if (preferedBackgroundAlpha >= 255) widgetView.setShadowAlpha(0x4f)
         val chart = (widgetView.dataView as TargetChart)
         val data = TargetCardPresenter.buildState(

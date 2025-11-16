@@ -23,6 +23,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.view.View
 import org.isoron.platform.gui.AndroidDataView
+import org.isoron.platform.gui.toInt
 import org.isoron.platform.time.JavaLocalDateFormatter
 import org.isoron.uhabits.core.models.Habit
 import org.isoron.uhabits.core.ui.screens.habits.show.views.HistoryCardPresenter
@@ -39,7 +40,7 @@ class HistoryWidget(
     stacked: Boolean = false
 ) : BaseWidget(context, id, stacked) {
 
-    override val defaultHeight: Int = 250
+    override val defaultHeight: Int = 150
     override val defaultWidth: Int = 250
 
     override fun getOnClickPendingIntent(context: Context): PendingIntent {
@@ -49,6 +50,7 @@ class HistoryWidget(
     override fun refreshData(view: View) {
         val widgetView = view as GraphWidgetView
         widgetView.setBackgroundAlpha(preferedBackgroundAlpha)
+        widgetView.setHabitColor(WidgetTheme().color(habit.color).toInt())
         if (preferedBackgroundAlpha >= 255) widgetView.setShadowAlpha(0x4f)
         val model = HistoryCardPresenter.buildState(
             habit = habit,
@@ -76,7 +78,10 @@ class HistoryWidget(
                     series = listOf(),
                     defaultSquare = HistoryChart.Square.OFF,
                     notesIndicators = listOf(),
-                    padding = 2.5
+                    padding = 3.3,
+                    widgetStyle = prefs.widgetStyle,
+                    showWeekdayLabels = prefs.showWidgetWeekdays,
+                    showDateHeaders = prefs.showWidgetDates,
                 )
             }
         ).apply {
